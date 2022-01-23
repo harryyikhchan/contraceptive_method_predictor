@@ -1,0 +1,89 @@
+# Methods
+
+## Data Collection
+
+This data-set is a subset of the 1987 National Indonesia Contraceptive Prevalence Survey [@lls-cpacttt-00]. It was sourced from the UCI Machine Learning Repository [@Dua:2019]. The samples are from single or married women who were either not pregnant or do not know if they were at the time of interview. It is made up of 9 attributes (2 numerical attributes and 7 categorical attributes), 1473 observations and three classes.
+
+The Indonesian Central Bureau of Statistics conducted the survey from September to December 1987 to collect information on sociodemographic status (ethnicity, education level, financial status, occupation, marital status, religious belief and so on). Interviews were conducted with 11,884 ever-married women age 15-49, from a sample of households representing 93 percent of the population of Indonesia.
+
+## Ethics Approval
+The study entailed secondary analyis of data containing no personal identifying information. The participants were informed about the objectives and methods of the study. They were informed that their participation was totally voluntary and that they could withdraw from the study at any time without citing any reason. Written and signed or thumb printed informed consent was obtained from those who agreed to participate, or from their guardians.
+
+## Data Pre-Processing
+
+### Summary of the dataset
+
+Exploratory data analysis was performed on the training data-set and was found to have no missing values. Table 1 shows the description of the attributes of this dataset. The attribute `Contraceptive method used` was taken as a target variable, and the ermaining eight attributes were taken as feature variables.
+
+```{r summaryDataset, fig.cap='Summary of the dataset', out.width = '50%'}
+table <- tibble('Column name'= c('Wife age', 'Wife education', 'Husband education', 'Number of children even born', 'Wife religion', 'Wife now working', 'Husband occupation', 'Standard-of-living index', 'Media Exposure', 'Contraceptive method used'),
+              'Description'=c('Wife\'s age', 'Wife\'s education', 'Husband\'s education', 'Number of children evern born', 'Wife\'s religion', 'Is wife working or not', 'Husband\'s occpation', 'Standard-of-living Index', 'Media exposure', 'Contraceptive method used'),
+              'Type'=c('Numberical', 'Categorical', 'Categorical', 'Numberical', 'Binary',' Binary', 'Categorical',' Categorical', 'Binary', 'Categorical'),
+              'Values'=c('any positive values', '1=low, 2, 3, 4=high', '1=low, 2, 3, 4=high', 'any positive values', '0=Non-Islam, 1=Islam', '0=Yes, 1=No', '1,2 ,3 ,4', '1=low, 2, 3, 4=high', '0=Good, 1=Not good', '1=No-use, 2=Long-term, 3=Short-term'))
+kable(table, caption ="Summary of the dataset")
+```
+
+### Distribution of the target class
+
+There are three classes in this dataset - with 1 ("No-use"), 2 ("Long-term use"), followed by 3 ("Short-term use"). In this study, we aimed to examine whether the women would use any contraceptive methods. Therefore, we have combined 2 and 3 as "use" case and have left 1 as it is ("no-use" case). After the transformation, the distribution of the classes: `0 = No-use`: 636 observations, `1 = use`: 837 observations.
+
+### Data Transformation
+
+Based on the EDA (Exploratory Data Analysis) performed earlier and variable descriptions, there were no missing values in the dataset. However, the variables were of different data types. In order to perform operations on data, the consistency of data types should be guaranteed. Feature scaling (Standardization) was performed on the numeric data while integer-encoding were done for the ordinal categorical features. The following table shows different variables in the data-set and the respective transformation performed on each of them.
+
+```{r transformation, fig.cap='Transformation of the variable', out.width = '100%'}
+table <- tibble('Data Type'= c('Numerical', 'Ordinal', 'Ordinal', 'Binary'),
+              'Variable'=c('Wife\'s age, Number of children evern born', 'Wife\'s education, Husband\'s education', 'Husband\'s occpation, Standard-of-living Index ', 'Wife\'s religion, Is wife working or not, Media exposure'),
+              'Transformation'=c('Scaling', 'Encoding', 'Encoding', 'None'),
+              'Technique used'=c('Standarization', 'Integer Encoding', 'Integer Encoding', 'Pass through')
+              )
+kable(table, caption='Transformation of the variable')
+```
+
+## Data Analysis
+
+### Model Selection
+
+We have explored the following four Machine Learning classifier algorithms to predict the target feature:
+
+1.  Decision Tree
+2.  kNN
+3.  Logistic Regression
+4.  RBF SVC
+
+### Train-Test Split
+
+Data sampling was not required as the original data-set was not a significantly larger one. As shown below, the model has been trained and tuned on 1031 rows of training data and tested on 442 rows of test data. This was constituted from 70:30 ratio of training vs test observations in the dataset.
+
+### Model Evaluation
+
+To measure the performance of the model we used the area under the receiver operating characteristics (ROC) curve (AUC or AUROC). 10-fold cross validation has been used as the model evaluation strategy. Accuracy results are presented as mean SD calculated over the tenfold validation sets.
+
+### Cross Validation Results
+From the table below, it can be clearly inferred that the RBF SVC algorithm gave the best score on both training and validation set.
+
+```{r crossVal, warning = FALSE, echo=FALSE }
+cross_val <- read.csv("../results/val_score_results.csv") 
+cross_val <- cross_val |> 
+  mutate_if(is_numeric, round, 2)
+kable(cross_val, caption="Cross Validation Result")
+```
+
+### Hyperparameter Tuning
+
+The randomized search for hyperparameter tuning of each classifiers has been performed via cross-validation approach. Given that the performance of RBF SVC was the best, we applied hyper-parameter tuning and experiment with the pre-defined hyperparmeters in a total of 200 iterations to find the optimal parameters. In each iteration, we compute the validation accuracy. A dictionary for the hyperparameters of the RBF SVC classifier is defined as below:
+
+-   value range for "gamma": Between -3 and 4 on a log scale
+
+-   value range for "C": Between -2 and 6 on a log scale
+
+-   values for `class_weight`: None, Balanced
+
+Among all of the combination of the hyperparameters, we settled for the combination of hyperparameter `gamma = 0.01, C = 10, class_weight = None`. The results of the top 5 models are shown in the table below. 
+
+```{r hyperparam, echo=FALSE}
+hyperparameter <- read.csv("../results/Random_Search_results.csv") 
+hyperparameter <- hyperparameter |> 
+  mutate_if(is.numeric, round, 2)
+kable(hyperparameter, caption="Hyperparameter Selection")
+```

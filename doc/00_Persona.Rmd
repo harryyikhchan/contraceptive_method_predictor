@@ -1,0 +1,2 @@
+## Exercise 1: Audience Personas
+Crystal is an undergraduate computer science student interested in machine learning. She has taken courses in machine learning. She is curious about any kinds of problem machine learning could be a viable solution to and how technology can benefit the general public.

@@ -1,0 +1,5 @@
+# Acknowledgment
+
+This data-set is a subset of the 1987 National Indonesia Contraceptive Prevalence Survey . It was sourced from the UCI Machine Learning Repository.
+
+The Python programming languages [@van1995python] and the following Python packages were used to perform the analysis: altair [@vanderplas2018altair], docopt [@docopt], matplotlib [@hunter2007matplotlib], numpy [@2020NumPy-Array], pandas [@mckinney2010data], sckit-learn [@pedregosa2011scikit]. The code used to perform the analysis and create this report can be found [here](https://github.com/harryyikhchan/contraceptive_method_predictor).

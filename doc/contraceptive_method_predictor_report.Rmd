@@ -1,9 +1,13 @@
 ---
-title: "Contraceptive Method Predictor Report"
-author: "Christopher Alexander, Yik Hong Chan, Abhiket Gaurav, Valli A"
+title: "Study of contraceptive method prediction model in Indonesia"
+author: "Harry Chan"
 date: "updated: `r Sys.Date()`"
 always_allow_html: true
 output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: true
   bookdown::html_document2:
     fig_caption: yes
     number_sections: yes
@@ -16,25 +20,36 @@ bibliography:
 import pandas as pd
 ```
 
+```{r setup_r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(knitr)
+```
+
+
+```{r persona, child="00_Persona.Rmd"}
+```
+
+## Exercise 2: Write your report
+The Github repo: https://github.com/harryyikhchan/contraceptive_method_predictor \
+The Online PDF Report: https://github.com/harryyikhchan/contraceptive_method_predictor/blob/main/doc/contraceptive_method_predictor_report.pdf
+
 ```{r summary, child="01_Summary.Rmd"}
 ```
 
 ```{r intro, child="02_Intro.Rmd"}
 ```
 
-```{r data, child="03_Data.Rmd"}
+```{r methods, child ="03_Methods.Rmd"}
 ```
 
-```{r eda, child="04_EDA.Rmd"}
+```{r results, child="04_Results.Rmd"}
 ```
 
-```{r method, child ="05_Method.Rmd"}
+```{r conclusion, child="05_Conclusion.Rmd"}
 ```
 
-```{r result, child="06_Results.Rmd"}
-```
-
-```{r acknowledgement, child="07_Acknowledgment.Rmd"}
+```{r acknowledgment, child="06_Acknowledgment.Rmd"}
 ```
 
 # References

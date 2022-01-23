@@ -1,0 +1,39 @@
+# Results
+
+## Confusion Matrix
+
+The accuracy of the machine learning algorithm can be calculated from the confusion matrix. In the abstract term, the confusion matrix is given below. Here, FP = False Positive, FN = False, Positive, TN = True Negative, and TP = True Positive. Accuracy, Recall, Precision and F-measure were used to calculate the performance measurement of the classification.
+
+|                              | Predicted Not Use (0)  | Predicted Use (1) | 
+| ---------------------------- | ---------------------- | ----------- | 
+| Actually Not Use (0)        | TN                      | FP |
+| Actually Use (1)            | FN                      | TP | 
+
+The confusion matrix of RBF SVC classifier for test set is shown in the figure 1. 
+
+```{r confusionmat, echo=FALSE, fig.cap="Confusion Matrix (Actual vs Predicted)", out.width = '50%'}
+knitr::include_graphics("../results/cm.png")
+```
+
+We have considered the use of contraceptive method as positive class. The findings of Confusion Matrix suggested that the model preformed well on the total number of `True positives` i.e 231 which were the ones that the model predicted correctly to be using contraceptive method.and `True Negatives` i.e 97 which were predicted correctly for not using contraceptive method. 
+
+However, it was found that there were some false positives and false negatives. `False positives` were indicated when the model affirmatively predicted the use of contraceptive method when in fact, the person did not use contraceptives i.e in our matrix 87 .and `False Negatives` indicated when the model incorrectly predicted the person was not using, when they did not use contraceptives.
+
+## Scoring Metric
+
+The recall, precision and the f1-score were calculated while considering each class to be the positive class. Our findings showed that the recall value was approximately **0.90**, indicating a better true positive rate (TPR) for the `1` class and **0.53**, indicating the TPR of the `0` class. The accuracy and weight average accuracy obtained were 74% and 73% respectively.
+
+```{r scoringmet, echo=FALSE, warning=FALSE, fig.cap="Scoring Metrics", out.width = '50%'}
+cl_report <- read.csv(file = '../results/cl_report.csv')
+cl_report <- cl_report |> 
+  mutate_if(is_numeric, round, 2)
+knitr::kable(cl_report, caption = "Scoring Metrics")
+```
+
+## ROC Curve
+
+As mentioned above, the ROC curves were plotted at a threshold of $0.5$. In order to obtain an overall score for our model, the Area under the curve was observed which resulted in a decent score of 78% from the figure 2: AUC ROC Curve.
+
+```{r roccurve, echo=FALSE, fig.cap="AUC ROC Curve", out.width = '50%'}
+knitr::include_graphics("../results/roc_curve.png")
+```

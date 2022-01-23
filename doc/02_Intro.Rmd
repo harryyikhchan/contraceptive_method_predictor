@@ -1,10 +1,8 @@
 
 # Introduction
 
+Family planning offers immediate health benefits, potential non-health benefits that encompass expanded education opportunities and empowerment for women as well as economic advancement. Consequently, the proportion of women of reproductive age who are in need for modern contraceptive methods has increased gradually from 73.6 percent in 2000 to 76.8 percent in 2020 [@un2020fp]. Reasons for the slow growth may arise from lack of access to services, poor quality of available services, gender barriers and personal bias against some methods. These limitations are not addressed in some regions due to their cultural/traditional beliefs, financial background, religious influence, etc. 
 
-In this project we are trying to answer the question: given the demographic and socio-economic status of a married woman can we predict the use of contraceptive or not ? Answering this question is important because of the adverse side effects contraceptives can have on a woman's health. Furthermore, it also gives us an understanding of the factors that could have contributed to the reasons behind why the contraceptive market is such a big industry in the health care sector right now. Here we approach this problem by using machine learning algorithm to predict whether a married woman prefers to use contraceptive or not given her demographic and socio-economic status.
+In last two decades, decision tree-based and multivariate regression-based prediction models have received some attention in the study of family planning, but it generally exhibit modest predictive performance, especially for certain large and complicated datasets [@Lim_acomparison]. Machine learning (ML) such as SVC can improve the performance by exploiting large data repositories to identify novel predictors and non-linear interactions between them.
 
-Disclaimer:
-
-The study is limited to the data collected back in 1987, in Indonesia. The whole analysis and model is based on this data-set and in no way, should be used in general sense. This study is just for academic purposes and should be used with caution when applying to "married-women in general" and to "different geographies". The data is dated, and the global scenarios has changed a lot since then.Hence, no conclusive remarks should be made.
-
+In this study, we conducted a prediction model research based on a specific background in Indonesia. The objective is to predict whether the contraceptive method is used by Indonesian women based on their demographic and socio-economic factors. In 1991, a dataset were taken from the 1987 National Indonesia Contraceptive Prevalence Survey and a cohort of 1473 samples were selected. 
